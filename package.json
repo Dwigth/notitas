@@ -1,0 +1,20 @@
+{
+  "name": "notitas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepack": "browserify assets/js/app.js > dist/js/app.bundle.js"
+  },
+  "author": "Dwigth Astacio Hernández",
+  "license": "MIT",
+  "dependencies": {
+    "@types/animejs": "^3.1.0",
+    "@types/pouchdb-browser": "^6.1.3",
+    "animejs": "^3.1.0",
+    "browserify": "^16.5.0",
+    "pouchdb-browser": "^7.1.1",
+    "typescript-collections": "^1.3.2"
+  }
+}

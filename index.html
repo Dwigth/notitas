@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Notitas</title>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/barebones.css">
+    <link rel="stylesheet" href="assets/css/skeleton-legacy.css">
+    <link rel="stylesheet" href="assets/css/custom-theme.css">
+    <link rel="stylesheet" href="assets/css/notitas.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div id="splash" class="splash"></div>
+    <div id="notitas" class="notitas">
+        <div class="container">
+            <button id="close">Cerrar</button>
+
+            <ul id="list" class="list">
+
+            </ul>
+        </div>
+    </div>
+    <!--  -->
+    <textarea data-page="note" id="content" class="centered data-text"
+        placeholder="Hoy quiero escribir acerca de..."></textarea>
+    <!--  -->
+    <div class="container">
+        <button data-page="initial" id="notes" class="">Mis notas</button>
+    </div>
+</body>
+<script src="dist/js/app.bundle.js"></script>
+<script src="dist/js/misc/util.js"></script>
+
+</html>
