@@ -11,18 +11,37 @@
     <link rel="stylesheet" href="assets/css/skeleton-legacy.css">
     <link rel="stylesheet" href="assets/css/custom-theme.css">
     <link rel="stylesheet" href="assets/css/notitas.css">
+    <link rel="stylesheet" href="assets/css/simplebar.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 <body>
+    <noscript>
+        <style>
+            /**
+                      * Reinstate scrolling for non-JS clients
+                      */
+            .simplebar-content-wrapper {
+                overflow: auto;
+            }
+
+            [data-simplebar] {
+                overflow: auto;
+            }
+        </style>
+    </noscript>
     <div id="splash" class="splash"></div>
     <div id="notitas" class="notitas">
         <div class="container">
             <button id="close">Cerrar</button>
 
-            <ul id="list" class="list">
+            <div data-simplebar>
+                <ul id="list" class="list">
 
-            </ul>
+                </ul>
+            </div>
+
         </div>
     </div>
     <!--  -->
@@ -35,5 +54,6 @@
 </body>
 <script src="dist/js/app.bundle.js"></script>
 <script src="dist/js/misc/util.js"></script>
+<script src="dist/js/misc/simplebar.min.js"></script>
 
 </html>

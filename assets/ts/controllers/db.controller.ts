@@ -1,18 +1,12 @@
-import PouchDB from 'pouchdb-browser';
+import { Store } from 'idb-keyval';
 
 // DECLARACIÓN GLOBAL DE LA BASE DE DATOS
-export let DATABASE: PouchDB.Database;
+export let CUSTOM_STORE: Store;
+
 
 export class DBController {
     constructor() {
-        DATABASE = new PouchDB('notitas');
-    }
-
-    async getNotes(): Promise<any> {
-        return await DATABASE.allDocs(
-            {
-                include_docs: true,
-                attachments: true
-            }).then(r => r).catch(e => console.error(e));
+        CUSTOM_STORE = new Store('notitas', 'notas');
+        CUSTOM_STORE._dbp.then(r => console.log(r)).catch(e => console.error(e))
     }
 }

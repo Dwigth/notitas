@@ -57,6 +57,12 @@ button[data-page="next"]{
     background-color:  var(--background-color-softer);
 }
 
+#list{
+    overflow:auto;
+    width: 100%;
+    height: 90vh;
+}
+
 #list li:hover{
     background-color: #5F345B;
     cursor: pointer;
