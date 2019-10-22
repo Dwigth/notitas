@@ -101,12 +101,16 @@ var InputController = /** @class */ (function () {
         this.editing = false;
         //TextArea
         this.TextArea = document.getElementById('content');
+        //ContextMenu
+        this.menu = document.querySelector(".menu");
+        // Propiedades del ContextMenu
+        this.menuIsVisible = false;
         this.NoteController = new note_controller_1.NoteController();
         this.ExpandTextArea();
         this.showNotes();
         this.closeNotes();
+        this.renderContextMenu();
     }
-    ;
     InputController.prototype.ExpandTextArea = function () {
         var _this = this;
         var contenido = this.TextArea;
@@ -147,7 +151,7 @@ var InputController = /** @class */ (function () {
                         return [4 /*yield*/, this.NoteController.getNotes()];
                     case 1:
                         notes = _a.sent();
-                        console.log(notes);
+                        // console.log(notes);
                         notes.forEach(function (id) { return __awaiter(_this, void 0, void 0, function () {
                             var data, note, li;
                             var _this = this;
@@ -156,12 +160,13 @@ var InputController = /** @class */ (function () {
                                     case 0: return [4 /*yield*/, this.NoteController.getIndividualNote(id)];
                                     case 1:
                                         data = _a.sent();
-                                        console.log(data);
                                         note = new note_1.Note(data.title, data.content);
                                         note._id = data._id;
                                         li = document.createElement('li');
+                                        li.classList.add(note._id.toString());
                                         li.dataset.dataEditing = 'false';
                                         li.addEventListener('click', function () { return _this.editNote(note, li); });
+                                        this.hold(note, li);
                                         li.textContent = data.content;
                                         list.appendChild(li);
                                         return [2 /*return*/];
@@ -172,6 +177,36 @@ var InputController = /** @class */ (function () {
                 }
             });
         }); });
+    };
+    /**
+     * Metodo para obtener el tiempo en el que mantiene presionado un elemento.
+     * @param el Elemento al que se le aplica la función
+     */
+    InputController.prototype.hold = function (note, el) {
+        var _this = this;
+        var holdTime = 0;
+        var intervalTime;
+        el.addEventListener('mousedown', function () {
+            intervalTime = setInterval(function () {
+                holdTime++;
+            }, 1000);
+        });
+        el.addEventListener('mouseup', function () {
+            clearInterval(intervalTime);
+            console.log('Tiempo sostenido: ' + holdTime);
+            if (holdTime > 1) {
+                holdTime = 0;
+                var target = '.' + note._id.toString();
+                console.log(target);
+                animejs_1.default({
+                    targets: target,
+                    backgroundColor: '#e62222'
+                });
+                if (confirm('¿Estás seguro que deseas eliminar la nota?')) {
+                    _this.NoteController.deleteNote(note._id);
+                }
+            }
+        });
     };
     /**
      * Funcionalidad para editar la nota
@@ -203,6 +238,32 @@ var InputController = /** @class */ (function () {
                 return [2 /*return*/];
             });
         }); });
+    };
+    InputController.prototype.renderContextMenu = function () {
+        var _this = this;
+        var toggleMenu = function (command) {
+            _this.menu.style.display = command === "show" ? "block" : "none";
+        };
+        var setPosition = function (_a) {
+            var top = _a.top, left = _a.left;
+            _this.menu.style.left = left + "px";
+            _this.menu.style.top = top + "px";
+            toggleMenu('show');
+        };
+        window.addEventListener("click", function (e) {
+            _this.menuIsVisible = true;
+            if (_this.menuIsVisible)
+                toggleMenu("hide");
+        });
+        window.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+            var origin = {
+                left: e.pageX,
+                top: e.pageY
+            };
+            setPosition(origin);
+            return false;
+        });
     };
     return InputController;
 }());
@@ -280,6 +341,16 @@ var NoteController = /** @class */ (function () {
                             note._id = +id;
                             return note;
                         })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    NoteController.prototype.deleteNote = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, idb_keyval_1.del(id, db_controller_1.CUSTOM_STORE).then(function (r) { return r; }).catch(function (e) { return e; })];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

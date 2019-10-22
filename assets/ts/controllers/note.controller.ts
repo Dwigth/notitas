@@ -1,4 +1,4 @@
-import { set, keys, get } from 'idb-keyval';
+import { set, keys, get, del } from 'idb-keyval';
 import { Note } from "../classes/note";
 import { CUSTOM_STORE } from './db.controller';
 import { INoteController } from '../helpers/INoteController';
@@ -26,5 +26,9 @@ export class NoteController implements INoteController {
                 note._id = +id;
                 return note;
             });
+    }
+
+    async deleteNote(id: string | number) {
+        return await del(id, CUSTOM_STORE).then(r => r).catch(e => e);
     }
 }
